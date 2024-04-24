@@ -1,0 +1,50 @@
+{% extends 'todos/main.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <div class="card card-body">
+      <img src="{% static 'images/darkmode.png' %}" class="card-img-top" alt="darkmode" style="height: 20rem;" />
+      <div class="card card-body">
+        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createTodo">Create Todo</button>
+        <br />
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <div class="btn-group" style="width: 10rem;">
+            <a href="{% url 'todos:dashboard' %}" class="btn btn-outline-primary btn-all {% if request.resolver_match.url_name == 'dashboard' %} active{% endif %}" type="button">All</a>
+            <a href="{% url 'todos:today_todo' %}" class="btn btn-outline-success btn-today {% if request.resolver_match.url_name == 'today_todo' %} active{% endif %}" type="button">Today</a>
+          </div>
+        </div>
+        <br />
+        {% include 'todos/alltodo.html' %}
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="createTodo" tabindex="-1" aria-labelledby="todoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="todoModalLabel">Create Todo</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'todos:add_todo' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="date" class="form-label">Enter Date</label>
+              <input type="date" name="date" id="date" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label for="task" class="form-label">Enter Task</label>
+              <input type="text" name="task" id="task" class="form-control" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
