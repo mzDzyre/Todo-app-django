@@ -1,19 +1,26 @@
 {% extends 'todos/main.html' %}
 {% block content %}
   <div class="container card card-body mt-5">
-    <form action="{% url "todos:update_todo" id=taskUpdate.id %}" class="card card-body" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h2>Update Todo</h2>
-        <p class="text-secondary">Task of date {{taskUpdate.date}}</p>
-        <div class="mb-3">
-          <label for="date" class="form-label">Update Date</label>
-          <input required type="date" name="date" id="date" value="{{formatted_date}}" class="form-control" />
-        </div>
-        <div class="mb-3">
-          <label for="task" class="form-label">Update Task</label>
-          <input required type="text" name="task" id="task" value="{{taskUpdate.task}}" class="form-control" />
-        </div>
-        <button type="submit" class="btn btn-primary">Update Todo</button>
-        </div>
+    <form action="{% url 'todos:update_todo' id=taskUpdate.id %}" class="card card-body" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h2>Update Todo</h2>
+      <p class="text-secondary">Task of date {{ taskUpdate.date }}</p>
+      <div class="mb-3">
+        <label for="date" class="form-label">Update Date</label>
+        <input required type="date" name="date" id="updateDate" value="{{ formatted_date }}" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="task" class="form-label">Update Task</label>
+        <input required type="text" name="task" id="task" value="{{ taskUpdate.task }}" class="form-control" />
+      </div>
+      <button type="submit" class="btn btn-primary">Update Todo</button>
+    </form>
   </div>
+
+  <script>
+    const datepicker = document.getElementById('updateDate')
+    // Set the minimum date to today's date
+    datepicker.min = new Date().toISOString().split('T')[0]
+    console.log(datepicker.min)
+  </script>
 {% endblock %}

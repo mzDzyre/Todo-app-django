@@ -10,8 +10,8 @@
         <br />
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <div class="btn-group" style="width: 10rem;">
-            <a href="{% url 'todos:dashboard' %}" class="btn btn-outline-primary btn-all {% if request.resolver_match.url_name == 'dashboard' %} active{% endif %}" type="button">All</a>
-            <a href="{% url 'todos:today_todo' %}" class="btn btn-outline-success btn-today {% if request.resolver_match.url_name == 'today_todo' %} active{% endif %}" type="button">Today</a>
+            <a href="{% url 'todos:dashboard' %}" class="btn btn-outline-primary btn-all {% if request.resolver_match.url_name == 'dashboard' %}{% endif %}" type="button">All</a>
+            <a href="{% url 'todos:today_todo' %}" class="btn btn-outline-success btn-today {% if request.resolver_match.url_name == 'today_todo' %}{% endif %}" type="button">Today</a>
           </div>
         </div>
         <br />
@@ -32,7 +32,7 @@
             {% csrf_token %}
             <div class="mb-3">
               <label for="date" class="form-label">Enter Date</label>
-              <input required type="date" name="date" id="date" class="form-control" />
+              <input required type="date" name="date" id="createDate" class="form-control" />
             </div>
             <div class="mb-3">
               <label for="task" class="form-label">Enter Task</label>
@@ -47,4 +47,11 @@
       </div>
     </div>
   </div>
+
+  <script>
+    const datepicker = document.getElementById('createDate')
+    // Set the minimum date to today's date
+    datepicker.min = new Date().toISOString().split('T')[0]
+    console.log(datepicker.min)
+  </script>
 {% endblock %}
